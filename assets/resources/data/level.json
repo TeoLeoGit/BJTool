@@ -1,0 +1,852 @@
+{
+	"1": {
+		"rowNum": 5,
+		"colNum": 4,
+		"blocks": [
+			{
+				"icon": "PA_Grid_9_8",
+				"x": 0,
+				"y": 1,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_8_1",
+				"x": 2,
+				"y": 2,
+				"type": 0
+			}
+		],
+		"exits": [
+			{
+				"icon": "PA_Machine_3_8_1_1",
+				"x": 0,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_1_1_1_1",
+				"x": 2,
+				"y": 4,
+				"size": 2
+			}
+		]
+	},
+	"2": {
+		"rowNum": 6,
+		"colNum": 5,
+		"blocks": [
+			{
+				"icon": "PA_Grid_12_9",
+				"x": 2,
+				"y": 1,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_11_8",
+				"x": 1,
+				"y": 2,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_4_10",
+				"x": 2,
+				"y": 2,
+				"type": 1,
+				"properties": {
+					"count": 2
+				}
+			}
+		],
+		"exits": [
+			{
+				"icon": "PA_Machine_3_9_1_1",
+				"x": 3,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_4_10_1_1",
+				"x": 0,
+				"y": 2,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_2_10_1_1",
+				"x": 4,
+				"y": 2,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_1_8_1_1",
+				"x": 0,
+				"y": 5,
+				"size": 2
+			}
+		]
+	},
+	"3": {
+		"rowNum": 6,
+		"colNum": 5,
+		"blocks": [
+			{
+				"icon": "PA_Grid_6_9",
+				"x": 3,
+				"y": 1,
+				"type": 2,
+				"properties": {
+					"count": 3
+				}
+			},
+			{
+				"icon": "PA_Grid_4_1",
+				"x": 2,
+				"y": 2,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_6_5",
+				"x": 0,
+				"y": 3,
+				"type": 0
+			}
+		],
+		"exits": [
+			{
+				"icon": "PA_Machine_3_5_1_1",
+				"x": 3,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_2_1_1_1",
+				"x": 4,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_4_1_1_1",
+				"x": 0,
+				"y": 4,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_1_9_1_1",
+				"x": 0,
+				"y": 5,
+				"size": 2
+			}
+		]
+	},
+	"4": {
+		"rowNum": 6,
+		"colNum": 5,
+		"blocks": [
+			{
+				"icon": "PA_Grid_3_1",
+				"x": 1,
+				"y": 0,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_3_7",
+				"x": 1,
+				"y": 1,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_6_6",
+				"x": 0,
+				"y": 2,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_6_3",
+				"x": 3,
+				"y": 2,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_5_5",
+				"x": 2,
+				"y": 3,
+				"type": 0
+			}
+		],
+		"exits": [
+			{
+				"icon": "PA_Machine_4_7_1_1",
+				"x": 0,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_3_5_1_1",
+				"x": 1,
+				"y": 0,
+				"size": 3
+			},
+			{
+				"icon": "PA_Machine_2_1_1_1",
+				"x": 4,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_1_3_1_1",
+				"x": 0,
+				"y": 5,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_1_6_1_1",
+				"x": 3,
+				"y": 5,
+				"size": 2
+			}
+		]
+	},
+	"5": {
+		"rowNum": 6,
+		"colNum": 6,
+		"blocks": [
+			{
+				"icon": "PA_Grid_9_5",
+				"x": 1,
+				"y": 0,
+				"type": 2,
+				"properties": {
+					"count": 2
+				}
+			},
+			{
+				"icon": "PA_Grid_8_9",
+				"x": 3,
+				"y": 0,
+				"type": 2,
+				"properties": {
+					"count": 1
+				}
+			},
+			{
+				"icon": "PA_Grid_4_9",
+				"x": 0,
+				"y": 2,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_3_4",
+				"x": 1,
+				"y": 2,
+				"type": 2,
+				"properties": {
+					"count": 1
+				}
+			},
+			{
+				"icon": "PA_Grid_4_5",
+				"x": 5,
+				"y": 2,
+				"type": 2,
+				"properties": {
+					"count": 2
+				}
+			},
+			{
+				"icon": "PA_Grid_3_6",
+				"x": 2,
+				"y": 3,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_3_1",
+				"x": 0,
+				"y": 4,
+				"type": 2,
+				"properties": {
+					"count": 1
+				}
+			},
+			{
+				"icon": "PA_Grid_3_3",
+				"x": 3,
+				"y": 4,
+				"type": 0
+			}
+		],
+		"exits": [
+			{
+				"icon": "PA_Machine_3_5_1_1",
+				"x": 0,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_3_9_1_1",
+				"x": 4,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_4_4_1_1",
+				"x": 0,
+				"y": 2,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_2_6_1_1",
+				"x": 5,
+				"y": 2,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_1_3_1_1",
+				"x": 0,
+				"y": 5,
+				"size": 3
+			},
+			{
+				"icon": "PA_Machine_1_1_1_1",
+				"x": 3,
+				"y": 5,
+				"size": 3
+			}
+		]
+	},
+	"6": {
+		"rowNum": 5,
+		"colNum": 4,
+		"blocks": [
+			{
+				"icon": "PA_Grid_8_2",
+				"x": 1,
+				"y": 0,
+				"type": 3,
+				"properties": {
+					"count": 10
+				}
+			},
+			{
+				"icon": "PA_Grid_9_1",
+				"x": 0,
+				"y": 2,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_4_5",
+				"x": 1,
+				"y": 3,
+				"type": 3,
+				"properties": {
+					"count": 15
+				}
+			},
+			{
+				"icon": "PA_Grid_2_6",
+				"x": 0,
+				"y": 0,
+				"type": 0
+			}
+		],
+		"exits": [
+			{
+				"icon": "PA_Machine_1_2_1_1",
+				"x": 2,
+				"y": 4,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_3_6_1_1",
+				"x": 1,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_4_5_1_1",
+				"x": 0,
+				"y": 3,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_2_1_1_1",
+				"x": 3,
+				"y": 0,
+				"size": 2
+			}
+		]
+	},
+	"7": {
+		"rowNum": 6,
+		"colNum": 5,
+		"blocks": [
+			{
+				"icon": "PA_Grid_7_9",
+				"x": 0,
+				"y": 0,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_12_7",
+				"x": 2,
+				"y": 1,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_11_10",
+				"x": 1,
+				"y": 2,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_4_3",
+				"x": 2,
+				"y": 2,
+				"type": 0
+			}
+		],
+		"exits": [
+			{
+				"icon": "PA_Machine_3_10_1_1",
+				"x": 3,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_4_9_1_1",
+				"x": 0,
+				"y": 2,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_2_3_1_1",
+				"x": 4,
+				"y": 2,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_1_7_1_1",
+				"x": 1,
+				"y": 5,
+				"size": 2
+			}
+		]
+	},
+	"8": {
+		"rowNum": 6,
+		"colNum": 5,
+		"blocks": [
+			{
+				"icon": "PA_Grid_6_6",
+				"x": 3,
+				"y": 1,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_4_9",
+				"x": 2,
+				"y": 2,
+				"type": 3,
+				"properties": {
+					"count": 12
+				}
+			},
+			{
+				"icon": "PA_Grid_6_7",
+				"x": 0,
+				"y": 3,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_8_10",
+				"x": 3,
+				"y": 4,
+				"type": 0
+			}
+		],
+		"exits": [
+			{
+				"icon": "PA_Machine_3_7_1_1",
+				"x": 3,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_2_10_1_1",
+				"x": 4,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_4_9_1_1",
+				"x": 0,
+				"y": 4,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_1_6_1_1",
+				"x": 0,
+				"y": 5,
+				"size": 2
+			}
+		]
+	},
+	"9": {
+		"rowNum": 6,
+		"colNum": 6,
+		"blocks": [
+			{
+				"icon": "PA_Grid_1_2",
+				"x": 0,
+				"y": 0,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_9_7",
+				"x": 1,
+				"y": 0,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_8_9",
+				"x": 3,
+				"y": 0,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_1_5",
+				"x": 5,
+				"y": 0,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_4_9",
+				"x": 0,
+				"y": 2,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_3_10",
+				"x": 1,
+				"y": 2,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_4_7",
+				"x": 5,
+				"y": 2,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_1_1",
+				"x": 1,
+				"y": 3,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_3_8",
+				"x": 2,
+				"y": 3,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_3_6",
+				"x": 0,
+				"y": 4,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_3_1",
+				"x": 3,
+				"y": 4,
+				"type": 0
+			}
+		],
+		"exits": [
+			{
+				"icon": "PA_Machine_3_7_1_1",
+				"x": 0,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_3_9_1_1",
+				"x": 4,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_4_10_1_1",
+				"x": 0,
+				"y": 2,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_2_8_1_1",
+				"x": 5,
+				"y": 2,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_4_5_1_1",
+				"x": 0,
+				"y": 4,
+				"size": 1
+			},
+			{
+				"icon": "PA_Machine_1_1_1_1",
+				"x": 0,
+				"y": 5,
+				"size": 3
+			},
+			{
+				"icon": "PA_Machine_1_6_1_1",
+				"x": 3,
+				"y": 5,
+				"size": 3
+			},
+			{
+				"icon": "PA_Machine_2_2_1_1",
+				"x": 5,
+				"y": 5,
+				"size": 1
+			}
+		]
+	},
+	"10": {
+		"rowNum": 6,
+		"colNum": 5,
+		"blocks": [
+			{
+				"icon": "PA_Grid_3_10",
+				"x": 1,
+				"y": 0,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_3_6",
+				"x": 1,
+				"y": 1,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_6_7",
+				"x": 0,
+				"y": 2,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_6_9",
+				"x": 3,
+				"y": 2,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_5_3",
+				"x": 2,
+				"y": 3,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_1_7",
+				"x": 0,
+				"y": 5,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_1_9",
+				"x": 4,
+				"y": 5,
+				"type": 0
+			}
+		],
+		"exits": [
+			{
+				"icon": "PA_Machine_4_6_1_1",
+				"x": 0,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_3_3_1_1",
+				"x": 1,
+				"y": 0,
+				"size": 3
+			},
+			{
+				"icon": "PA_Machine_2_10_1_1",
+				"x": 4,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_1_9_1_1",
+				"x": 0,
+				"y": 5,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_1_7_1_1",
+				"x": 3,
+				"y": 5,
+				"size": 2
+			}
+		]
+	},
+	"11": {
+		"rowNum": 7,
+		"colNum": 5,
+		"blocks": [
+			{
+				"icon": "PA_Grid_10_10",
+				"x": 2,
+				"y": 0,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_1_3",
+				"x": 4,
+				"y": 0,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_1_2",
+				"x": 0,
+				"y": 1,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_6_7",
+				"x": 1,
+				"y": 1,
+				"type": 1,
+				"properties": {
+					"count": 2
+				}
+			},
+			{
+				"icon": "PA_Grid_4_1",
+				"x": 0,
+				"y": 3,
+				"type": 1,
+				"properties": {
+					"count": 1
+				}
+			},
+			{
+				"icon": "PA_Grid_11_3",
+				"x": 1,
+				"y": 3,
+				"type": 1,
+				"properties": {
+					"count": 1
+				}
+			},
+			{
+				"icon": "PA_Grid_2_10",
+				"x": 2,
+				"y": 3,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_1_7",
+				"x": 2,
+				"y": 4,
+				"type": 0
+			},
+			{
+				"icon": "PA_Grid_5_9",
+				"x": 4,
+				"y": 4,
+				"type": 1,
+				"properties": {
+					"count": 1
+				}
+			},
+			{
+				"icon": "PA_Grid_1_10",
+				"x": 1,
+				"y": 6,
+				"type": 1,
+				"properties": {
+					"count": 2
+				}
+			},
+			{
+				"icon": "PA_Grid_2_6",
+				"x": 2,
+				"y": 6,
+				"type": 1,
+				"properties": {
+					"count": 2
+				}
+			}
+		],
+		"exits": [
+			{
+				"icon": "PA_Machine_3_3_1_1",
+				"x": 0,
+				"y": 0,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_4_7_1_1",
+				"x": 0,
+				"y": 0,
+				"size": 3
+			},
+			{
+				"icon": "PA_Machine_3_9_1_1",
+				"x": 2,
+				"y": 0,
+				"size": 3
+			},
+			{
+				"icon": "PA_Machine_2_10_1_1",
+				"x": 4,
+				"y": 0,
+				"size": 3
+			},
+			{
+				"icon": "PA_Machine_4_2_1_1",
+				"x": 0,
+				"y": 3,
+				"size": 3
+			},
+			{
+				"icon": "PA_Machine_2_7_1_1",
+				"x": 4,
+				"y": 3,
+				"size": 3
+			},
+			{
+				"icon": "PA_Machine_4_10_1_1",
+				"x": 0,
+				"y": 6,
+				"size": 1
+			},
+			{
+				"icon": "PA_Machine_1_1_1_1",
+				"x": 0,
+				"y": 6,
+				"size": 1
+			},
+			{
+				"icon": "PA_Machine_1_3_1_1",
+				"x": 1,
+				"y": 6,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_1_2_1_1",
+				"x": 3,
+				"y": 6,
+				"size": 2
+			},
+			{
+				"icon": "PA_Machine_2_6_1_1",
+				"x": 4,
+				"y": 6,
+				"size": 1
+			}
+		]
+	}
+}
