@@ -377,6 +377,7 @@ export class ToolMananger extends Component {
 
         for (let i = 0; i < cellNumb; i++) {
             this.gridParent.children[i].active = true;
+            this.gridParent.children[i].getComponent(BlockBackground).reset();
         }
         for (let i = cellNumb; i < this.gridParent.children.length; i++) {
             this.gridParent.children[i].getComponent(BlockBackground).reset();
@@ -487,7 +488,6 @@ export class ToolMananger extends Component {
     }
 
     createBlocks(blockData: BlockData[]) {
-        log(blockData);
         for (let i = 0; i < blockData.length; i++) {
             const worldPos = this._grid[blockData[i].y][blockData[i].x].node.worldPosition;
             const newBlock = instantiate(this.blockPrefab);
