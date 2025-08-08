@@ -1,11 +1,12 @@
 import { _decorator, Camera, Component, EditBox, EventMouse, input, Input, instantiate, Layout, log, Node, Prefab, resources, Sprite, SpriteFrame, UITransform, Vec2, Vec3 } from 'cc';
-import { BLOCK_TYPE, BlockData, Config, EVENT, LEVEL } from './Config';
+import { BLOCK_TYPE, BlockData, Config, EVENT, EXIT_DATA, LEVEL } from './Config';
 import BJEventManager from './BJEventManager';
 import { Global } from './Global';
 import { Block } from './Block';
 import { BlockBackground } from './BlockBackground';
 import { Wall } from './Wall';
 import { Data } from './Data';
+import { Exit } from './Exit';
 const { ccclass, property } = _decorator;
 
 @ccclass('ToolMananger')
@@ -19,6 +20,9 @@ export class ToolMananger extends Component {
     @property(Prefab)
     wallPrefab: Prefab = null!;
 
+    @property(Prefab)
+    exitPrefab: Prefab = null!;
+
     @property(Node)
     gridParent: Node = null!; // Holds grid cells
 
@@ -31,6 +35,9 @@ export class ToolMananger extends Component {
     @property(Node)
     wallParent: Node = null!;
 
+    @property(Node)
+    exitParent: Node = null!;
+
     @property(Camera)
     mainCamera: Camera = null!;
 
@@ -40,14 +47,20 @@ export class ToolMananger extends Component {
     @property(EditBox)
     editBoxRow: EditBox = null!;
 
+    @property(EditBox)
+    editBoxExitSize: EditBox = null!;
+
     @property(Layout)
     layoutGrid: Layout = null!;
 
     private _draggedBlock: Node | null = null;
-    private _isDragging: boolean = false;
+    private _draggedExit: Node | null = null;
     private _mousePos: Vec3 = new Vec3();
     private _grid: BlockBackground[][] = [];
     private _rootCell: Node = null;
+    private _rootWall: Node = null;
+    private _isCreateBlock: boolean = false;
+    private _isCreateExit: boolean = false;
     private _editLevel: LEVEL = {
         rowNum: 0,
         colNum: 0,
@@ -185,8 +198,11 @@ export class ToolMananger extends Component {
 
         this.editBoxCol.node.on(EditBox.EventType.TEXT_CHANGED, this.onColumnChanged, this);
         this.editBoxRow.node.on(EditBox.EventType.TEXT_CHANGED, this.onRowChanged, this);
+        this.editBoxExitSize.node.on(EditBox.EventType.TEXT_CHANGED, this.onExitSizeChanged, this);
+
 
         BJEventManager.instance.on(EVENT.CHOOSE_BLOCK, this.onClickCreateBlock, this);
+        BJEventManager.instance.on(EVENT.CHOOSE_EXIT, this.onClickCreateExit, this);
         BJEventManager.instance.on(EVENT.EDIT_LEVEL, this.loadLevel, this);
 
         this.initGrid();
@@ -200,8 +216,10 @@ export class ToolMananger extends Component {
 
         this.editBoxCol.node.off(EditBox.EventType.TEXT_CHANGED, this.onColumnChanged, this);
         this.editBoxRow.node.off(EditBox.EventType.TEXT_CHANGED, this.onRowChanged, this);
+        this.editBoxExitSize.node.off(EditBox.EventType.TEXT_CHANGED, this.onExitSizeChanged, this);
 
         BJEventManager.instance.off(EVENT.CHOOSE_BLOCK, this.onClickCreateBlock);
+        BJEventManager.instance.off(EVENT.CHOOSE_EXIT, this.onClickCreateExit);
         BJEventManager.instance.off(EVENT.EDIT_LEVEL, this.loadLevel);
     }
 
@@ -238,22 +256,27 @@ export class ToolMananger extends Component {
     }
 
     onMouseDown(event: EventMouse) {
-        if (this._draggedBlock) {
-            this._isDragging = true;
-        }
+        
     }
     
     onMouseUp(event: EventMouse) {
-        if (this._draggedBlock) {
+        if (this._isCreateBlock) {
             const snappedPos = this.getClosestGridPosition(this._draggedBlock.worldPosition);
             this.createBlockAt(snappedPos);
+        } else if (this._isCreateExit) {
+            const snappedPos = this.getClosestWallPosition(this._draggedExit.worldPosition);
+            this.createExitAt(snappedPos);
         }
     }
     
     onMouseMove(event: EventMouse) {
-        if (this._isDragging && this._draggedBlock) {
+        if (this._isCreateBlock && this._draggedBlock) {
             const worldPos = this.screenToWorld(new Vec3(event.getLocation().x, event.getLocation().y, 0));
             this._draggedBlock.setWorldPosition(worldPos);
+            this._mousePos = worldPos;
+        } else if (this._isCreateExit && this._draggedExit) {
+            const worldPos = this.screenToWorld(new Vec3(event.getLocation().x, event.getLocation().y, 0));
+            this._draggedExit.setWorldPosition(worldPos);
             this._mousePos = worldPos;
         }
     }
@@ -271,7 +294,26 @@ export class ToolMananger extends Component {
         this.loadBlockSprite(`PA_Grid_${Global.ShapeId}_${Global.ColorId}`, 
             this._draggedBlock.getChildByName('sprite').getComponent(Sprite));
 
-        this._isDragging = true;
+        this._isCreateBlock = true;
+        this._isCreateExit = false;
+        this._draggedBlock.active = true;
+        this._draggedExit && (this._draggedExit.active = false);
+    }
+
+    onClickCreateExit() {
+        if (!this._draggedExit) {
+            const exit = instantiate(this.exitPrefab);
+            this.previewLayer.addChild(exit);
+            const exitPos = this.previewLayer.getComponent(UITransform).convertToNodeSpaceAR(this._mousePos);
+            exit.setPosition(exitPos);
+            this._draggedExit = exit;
+        }
+
+        this._draggedExit.getComponent(Exit).setSprite(`PA_Machine_1_${Global.ColorId}_1_1`);
+        this._isCreateExit = true;
+        this._isCreateBlock = false;
+        this._draggedBlock && (this._draggedBlock.active = false);
+        this._draggedExit.active = true;
     }
 
     getClosestGridPosition(worldPos: Vec3): Vec3 {
@@ -287,6 +329,22 @@ export class ToolMananger extends Component {
         }
         
         this._rootCell = closest;
+        return closest ? closest.worldPosition : worldPos;
+    }
+
+    getClosestWallPosition(worldPos: Vec3): Vec3 {
+        let closest = null;
+        let minDist = Number.MAX_VALUE;
+    
+        for (const wall of this.wallParent.children) {
+            const dist = Vec3.distance(wall.worldPosition, worldPos);
+            if (dist < minDist) {
+                minDist = dist;
+                closest = wall;
+            }
+        }
+        
+        this._rootWall = closest;
         return closest ? closest.worldPosition : worldPos;
     }
 
@@ -335,6 +393,55 @@ export class ToolMananger extends Component {
         return true;
     }
 
+    createExitAt(position: Vec3) {
+        const rootWallComp = this._rootWall.getComponent(Wall);
+        if (rootWallComp.IsCorner || rootWallComp.IsExit) return;
+        
+        Global.CanCreateExit = true;
+        if (rootWallComp.HorDir) {
+            if ((rootWallComp.Y + Global.ExitSize - 1) >= Global.RowCount) Global.CanCreateExit = false;
+            for (let i = 1; i < Global.ExitSize; i++)
+                BJEventManager.instance.emit(EVENT.CHECK_EXIT_CREATED, [rootWallComp.X, rootWallComp.Y + i, rootWallComp.HorDir, rootWallComp.VerDir]);
+        }
+        if (rootWallComp.VerDir) {
+            if ((rootWallComp.X + Global.ExitSize - 1) >= Global.ColCount) Global.CanCreateExit = false;
+            for (let i = 0; i < Global.ExitSize; i++)
+                BJEventManager.instance.emit(EVENT.CHECK_EXIT_CREATED, [rootWallComp.X + i, rootWallComp.Y, rootWallComp.HorDir, rootWallComp.VerDir]);
+        }
+        
+        if (Global.CanCreateExit) {
+            const newExit = instantiate(this.exitPrefab);
+            this.exitParent.addChild(newExit);
+            newExit.setWorldPosition(position);
+            const exitComponent = newExit.getComponent(Exit);
+            exitComponent.setExit(rootWallComp.X, rootWallComp.Y, Global.ExitSize, rootWallComp.HorDir, rootWallComp.VerDir);
+            rootWallComp.IsExit = true;
+
+            let spriteName = '';
+            if (rootWallComp.HorDir) {
+                spriteName = rootWallComp.HorDir === 'left' ? `PA_Machine_2_${Global.ColorId}_1_1` : `PA_Machine_4_${Global.ColorId}_1_1`;
+                for (let i = 1; i < Global.ExitSize; i++) {
+                    BJEventManager.instance.emit(EVENT.CREATE_EXIT_SUCCESS, [rootWallComp.X, rootWallComp.Y + i, rootWallComp.HorDir, rootWallComp.VerDir]);
+                }
+            }
+            else {
+                spriteName = rootWallComp.VerDir === 'bot' ? `PA_Machine_1_${Global.ColorId}_1_1` : `PA_Machine_3_${Global.ColorId}_1_1`;
+                for (let i = 1; i < Global.ExitSize; i++) {
+                    BJEventManager.instance.emit(EVENT.CREATE_EXIT_SUCCESS, [rootWallComp.X + i, rootWallComp.Y, rootWallComp.HorDir, rootWallComp.VerDir]);
+                }
+            }
+
+            let newExitData: EXIT_DATA = {
+                icon: spriteName,
+                size: Global.ExitSize,
+                x: rootWallComp.X,
+                y: rootWallComp.Y,
+                type: 0,
+            }
+            this._editLevel.exits.push(newExitData);
+        }
+    }
+
     screenToWorld(screenPos: Vec3): Vec3 {
         const out = new Vec3();
         this.mainCamera.screenToWorld(screenPos, out);
@@ -371,6 +478,19 @@ export class ToolMananger extends Component {
         }
     }
 
+    onExitSizeChanged(editBox: EditBox) {
+        const value = editBox.string;
+        const parsed = Number(value);
+
+        if (isNaN(parsed)) {
+            log(`Invalid number: "${value}"`);
+        } else {
+            if (parsed > 0 && parsed <= 4) {
+                Global.ExitSize = parsed;
+            }
+        }
+    }
+
     onGridDimChanged(col: number, row: number) {
         this.layoutGrid.constraintNum = col;
         const cellNumb = col * row;
@@ -400,83 +520,45 @@ export class ToolMananger extends Component {
         this.gridParent.position = new Vec3(204 + (Config.MAX_COLUMN - col) * 50, -406 + (Config.MAX_ROW - row) * 50);
 
         this.scheduleOnce(() => {
-            this.createWalls();
+            this.clearWalls();
             this.clearBlocks();
+            this.clearExits();
         }, 0.4)
     }
 
     createWalls() {
-        for (const child of this.wallParent.children) {
-            child.destroy();
-        }
+        const uiTransform = this.wallParent.getComponent(UITransform);
+    
+        // Clear existing walls
         this.wallParent.removeAllChildren();
-        
-        //bottom walls
+    
+        // Helper to create a wall
+        const createWall = (col: number, row: number, offset: Vec3, sideH: string | null, sideV: string | null) => {
+            const wall = instantiate(this.wallPrefab);
+            this.wallParent.addChild(wall);
+            const worldPos = this._grid[row][col].node.worldPosition;
+            const localPos = uiTransform.convertToNodeSpaceAR(worldPos).add(offset);
+            wall.setPosition(localPos);
+            wall.getComponent(Wall).init(sideH, sideV, col, row);
+        };
+    
+        // Bottom & Top walls
         for (let col = 0; col < Global.ColCount; col++) {
-            const newWall = instantiate(this.wallPrefab);
-            this.wallParent.addChild(newWall);
-            const cellWorldPos = this._grid[0][col].node.worldPosition;
-            const wallPos = this.wallParent.getComponent(UITransform).convertToNodeSpaceAR(cellWorldPos).add(new Vec3(0, -75));
-            newWall.setPosition(wallPos);
+            createWall(col, 0, new Vec3(0, -75), null, 'bot');
+            createWall(col, Global.RowCount - 1, new Vec3(0, 75), null, 'top');
         }
-
-        //top walls
-        for (let col = 0; col < Global.ColCount; col++) {
-            const newWall = instantiate(this.wallPrefab);
-            this.wallParent.addChild(newWall);
-            const cellWorldPos = this._grid[Global.RowCount - 1][col].node.worldPosition;
-            const wallPos = this.wallParent.getComponent(UITransform).convertToNodeSpaceAR(cellWorldPos).add(new Vec3(0, 75));
-            newWall.setPosition(wallPos);
-        }
-        
-        //left walls
+    
+        // Left & Right walls
         for (let row = 0; row < Global.RowCount; row++) {
-            const newWall = instantiate(this.wallPrefab);
-            this.wallParent.addChild(newWall);
-            const cellWorldPos = this._grid[row][0].node.worldPosition;
-            const wallPos = this.wallParent.getComponent(UITransform).convertToNodeSpaceAR(cellWorldPos).add(new Vec3(-75, 0));
-            newWall.setPosition(wallPos);
-            newWall.getComponent(Wall).init('left', null);
+            createWall(0, row, new Vec3(-75, 0), 'left', null);
+            createWall(Global.ColCount - 1, row, new Vec3(75, 0), 'right', null);
         }
-
-        //right walls
-        for (let row = 0; row < Global.RowCount; row++) {
-            const newWall = instantiate(this.wallPrefab);
-            this.wallParent.addChild(newWall);
-            const cellWorldPos = this._grid[row][Global.ColCount - 1].node.worldPosition;
-            const wallPos = this.wallParent.getComponent(UITransform).convertToNodeSpaceAR(cellWorldPos).add(new Vec3(75, 0));
-            newWall.setPosition(wallPos);
-            newWall.getComponent(Wall).init('right', null);
-        }
-
-        //corners
-        const botLeftWall = instantiate(this.wallPrefab);
-        this.wallParent.addChild(botLeftWall);
-        const cellWorldPos1 = this._grid[0][0].node.worldPosition;
-        const wallPos1 = this.wallParent.getComponent(UITransform).convertToNodeSpaceAR(cellWorldPos1).add(new Vec3(-75, -75));
-        botLeftWall.setPosition(wallPos1);
-        botLeftWall.getComponent(Wall).init('left', 'bot');
-
-        const botRightWall = instantiate(this.wallPrefab);
-        this.wallParent.addChild(botRightWall);
-        const cellWorldPos2 = this._grid[0][Global.ColCount - 1].node.worldPosition;
-        const wallPos2 = this.wallParent.getComponent(UITransform).convertToNodeSpaceAR(cellWorldPos2).add(new Vec3(75, -75));
-        botRightWall.setPosition(wallPos2);
-        botRightWall.getComponent(Wall).init('right', 'bot');
-
-        const topLeftWall = instantiate(this.wallPrefab);
-        this.wallParent.addChild(topLeftWall);
-        const cellWorldPos3 = this._grid[Global.RowCount - 1][0].node.worldPosition;
-        const wallPos3 = this.wallParent.getComponent(UITransform).convertToNodeSpaceAR(cellWorldPos3).add(new Vec3(-75, 75));
-        topLeftWall.setPosition(wallPos3);
-        topLeftWall.getComponent(Wall).init('left', 'top');
-
-        const topRightWall = instantiate(this.wallPrefab);
-        this.wallParent.addChild(topRightWall);
-        const cellWorldPos4 = this._grid[Global.RowCount - 1][Global.ColCount - 1].node.worldPosition;
-        const wallPos4 = this.wallParent.getComponent(UITransform).convertToNodeSpaceAR(cellWorldPos4).add(new Vec3(75, 75));
-        topRightWall.setPosition(wallPos4);
-        topRightWall.getComponent(Wall).init('right', 'top');
+    
+        // Corners
+        createWall(0, 0, new Vec3(-75, -75), 'left', 'bot'); // bottom-left
+        createWall(Global.ColCount - 1, 0, new Vec3(75, -75), 'right', 'bot'); // bottom-right
+        createWall(0, Global.RowCount - 1, new Vec3(-75, 75), 'left', 'top'); // top-left
+        createWall(Global.ColCount - 1, Global.RowCount - 1, new Vec3(75, 75), 'right', 'top'); // top-right
     }
 
     clearBlocks() {
@@ -485,6 +567,20 @@ export class ToolMananger extends Component {
         }
         this.blockParent.removeAllChildren();
         this._editLevel.blocks = [];
+    }
+
+    clearExits() {
+        for (const child of this.exitParent.children) {
+            child.destroy();
+        }
+        this.exitParent.removeAllChildren();
+    }
+
+    clearWalls() {
+        for (const child of this.wallParent.children) {
+            child.destroy();
+        }
+        this.wallParent.removeAllChildren();
     }
 
     createBlocks(blockData: BlockData[]) {
@@ -529,11 +625,14 @@ export class ToolMananger extends Component {
         Global.ColCount = data.colNum;
         
         this.clearBlocks();
+        this.clearWalls();
+        this.clearExits();
         this.onGridDimChanged(Global.ColCount, Global.RowCount);
         this.createWalls();
         this.scheduleOnce(() => {
             this._editLevel = data;
             this.createBlocks(data.blocks);
+            this.createWalls();
         }, 0.4);
 
         this.node.active = true;
@@ -544,5 +643,3 @@ export class ToolMananger extends Component {
         BJEventManager.instance.emit(EVENT.OPEN_MENU);
     }
 }
-
-

@@ -21,9 +21,12 @@ export enum BLOCK_TYPE {
 
 export enum EVENT {
     CHOOSE_BLOCK = 'CHOOSE_BLOCK',
+    CHOOSE_EXIT = 'CHOOSE_EXIT',
     INIT_MENU = 'INIT_MENU',
     EDIT_LEVEL = 'EDIT_LEVEL',
-    OPEN_MENU = 'OPEN_MENU'
+    OPEN_MENU = 'OPEN_MENU',
+    CHECK_EXIT_CREATED = 'CHECK_EXIT_CREATED',
+    CREATE_EXIT_SUCCESS = 'CREATE_EXIT_SUCCESS'
 }
 
 export enum ID_BLOCK {
@@ -268,9 +271,7 @@ export enum EXIT_TYPE {
 }
 
 export type EXIT_DATA = {
-    index: number,
-    typeIndex: number,
-    colorIndex: number,
+    icon: string,
     x: number,
     y: number,
     size: number,
